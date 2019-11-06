@@ -1,0 +1,40 @@
+{
+  "name": "@axolo/sequelize-query",
+  "version": "0.0.1",
+  "description": "get sequelize querying options by program, querystring or http.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/axolo/sequelize-querystring.git"
+  },
+  "keywords": [
+    "sequelize",
+    "Querystring",
+    "QueryInterface",
+    "query",
+    "qs",
+    "search",
+    "advance search",
+    "sequelize options",
+    "sequelize querying"
+  ],
+  "author": "Yueming Fang",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/axolo/sequelize-querystring/issues"
+  },
+  "homepage": "https://github.com/axolo/sequelize-querystring#readme",
+  "dependencies": {
+    "deep-map-keys": "^2.0.1",
+    "deepmerge": "^4.2.2",
+    "lodash": "^4.17.15"
+  },
+  "devDependencies": {
+    "eslint": "^6.6.0",
+    "qs": "^6.9.0",
+    "sequelize": "^5.21.2"
+  }
+}
