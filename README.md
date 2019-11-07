@@ -1,6 +1,16 @@
 # Sequelize Query
 
-get [Sequelize] [querying] options by program, querystring or http.
+Get [Sequelize] [querying] options by program, querystring or http.
+
+Convert sequelize operators Aliases to sequelize operators Symbol.
+
+|   Alias    |          Symbol          |
+| ---------- | ------------------------ |
+| `$or`      | `[Sequelize.Op.or]`      |
+| `$and`     | `[Sequelize.Op.and]`     |
+| `$ne`      | `[Sequelize.Op.ne]`      |
+| `$between` | `[Sequelize.Op.between]` |
+| ...        | ...                      |
 
 ## install
 

@@ -1,7 +1,7 @@
 {
   "name": "@axolo/sequelize-query",
-  "version": "0.0.2",
-  "description": "get sequelize querying options by program, querystring or http.",
+  "version": "0.0.3",
+  "description": "Get sequelize querying options by program, querystring or http.",
   "main": "index.js",
   "scripts": {
     "test": "node test"

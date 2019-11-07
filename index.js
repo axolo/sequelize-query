@@ -52,8 +52,8 @@ module.exports = (sequelize, query, options, keys, excludeOps) => {
     const $where = _.isObject(query[keys.where]) ? query[keys.where] : JSON.parse(query[keys.where]);
     const ops = _.omit(operatorsAliases, excludeOps)
     where = deepMerge.all([ where, deepMapKeys($where, key => ops[key] || key) ]);
-    options = deepMerge.all([ options, { where } ]);
   }
+  options = deepMerge.all([ options, { where } ]);
 
   if (query[keys.order]) {
     const $order = query[keys.order];
