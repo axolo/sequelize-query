@@ -43,7 +43,7 @@ module.exports = (sequelize, query, options, keys, excludeOps) => {
     $col: Op.col,
   };
 
-  options = { ...{ logging: undefined, subQuery: false, distinct: true, offset: 0, limit: 1000 }, ...options };
+  options = { ...{ subQuery: false, distinct: true, offset: 0, limit: 1000 }, ...options };
   keys = { ...{ where: 'where', order: 'order', offset: 'offset', limit: 'limit' }, ...keys };
 
   let where = _.omit(query, Object.keys(keys));

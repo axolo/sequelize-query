@@ -1,8 +1,8 @@
 # Sequelize Query
 
-Get [Sequelize] [querying] options by program, querystring or http.
+Get [Sequelize] [querying] options by program, querystring, http or curl.
 
-Convert sequelize operators Aliases to sequelize operators Symbol.
+Convert Sequelize operators Aliases to Sequelize operators Symbol.
 
 |   Alias    |          Symbol          |
 | ---------- | ------------------------ |
@@ -16,15 +16,79 @@ Convert sequelize operators Aliases to sequelize operators Symbol.
 
 ```bash
 npm install @axolo/sequelize-query --save
-# or use Yarn
-yarn add @axolo/sequelize-query
 ```
+
+## test
+
+```bash
+npm run test
+```
+
+> use by program see in [test](./test/index.js)
+
+## API
+
+```text
+sequelizeQuery(sequelize, query, options, keys, excludeOps)
+```
+
+### parameters
+
+|    Name    |  Type  | Required |          Description           |
+| ---------- | ------ | :------: | ------------------------------ |
+| sequelize  | Object |   true   | Sequelize instance             |
+| query      | Object |   true   | query (with alias) for convert |
+| options    | Object |          | Sequelize querying options     |
+| keys       | Object |          | omit alias keys for query      |
+| excludeOps | Array  |          | omit Sequelize Op alias        |
+
+- default `options`: `{ subQuery: false, distinct: true, offset: 0, limit: 1000 }`
+- default `keys`: `{ where: 'where', order: 'order', offset: 'offset', limit: 'limit' }`
+
+### return
+
+|  Type  |                   Description                    |
+| ------ | ------------------------------------------------ |
+| Object | Sequelize querying options with operators Symbol |
 
 ## usage
 
+A example of [Egg.js] at `/app/controller/user.js` by [RESTful].
+
+### controller
+
+```js
+'use strict';
+
+const sequelizeQuery = require('@axolo/sequelize-query');
+const Controller = require('egg').Controller;
+
+class SequelizeQueryController extends Controller {
+
+  async index() {
+    const { app, ctx } = this;
+    const { query } = ctx.request;
+    const options = sequelizeQuery(app.Sequelize, query, { logging: console.log });
+    const user = await ctx.model.User.findAll(options);
+    ctx.body = user;
+  }
+
+  async create() {
+    const { app, ctx } = this;
+    const { body } = ctx.request;
+    const options = sequelizeQuery(app.Sequelize, body, { logging: console.log });
+    const user = await ctx.model.User.findAll(options);
+    ctx.body = user;
+  }
+
+}
+
+module.exports = SequelizeQueryController;
+```
+
 ### request
 
-#### querystring
+#### GET
 
 ```text
 /user?where={"username":{"$like":"%25ming%25"}}&limit=5&order=[["createdAt","desc"],["updatedAt","asc"]]
@@ -32,7 +96,7 @@ yarn add @axolo/sequelize-query
 
 > **MUST** [encodeURIComponent] querystring by url
 
-#### http post
+#### POST
 
 ```bash
 curl -X POST '/user' \
@@ -60,7 +124,9 @@ curl -X POST '/user' \
 ]
 ```
 
-### get SQL by Sequelize
+### SQL
+
+> SQL from Sequelize
 
 ```sql
 SELECT `id`, `username`, `password`, `status`, `createdAt`, `updatedAt`, `deletedAt`
@@ -73,3 +139,5 @@ LIMIT 0, 5;
 [Sequelize]: https://sequelize.org/
 [querying]: https://sequelize.org/master/manual/querying.html
 [encodeURIComponent]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
+[Egg.js]: https://github.com/eggjs/egg
+[RESTful]: https://eggjs.org/zh-cn/tutorials/restful.html

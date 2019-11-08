@@ -1,6 +1,6 @@
 {
   "name": "@axolo/sequelize-query",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Get sequelize querying options by program, querystring or http.",
   "main": "index.js",
   "scripts": {
@@ -19,7 +19,9 @@
     "search",
     "advance search",
     "sequelize options",
-    "sequelize querying"
+    "sequelize querying",
+    "sequelize url",
+    "sequelize query"
   ],
   "author": "Yueming Fang",
   "license": "MIT",
