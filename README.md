@@ -60,6 +60,7 @@ A example of [Egg.js] at `/app/controller/user.js` by [RESTful].
 ```js
 'use strict';
 
+const qs = require('qs');
 const sequelizeQuery = require('@axolo/sequelize-query');
 const Controller = require('egg').Controller;
 
@@ -67,7 +68,8 @@ class SequelizeQueryController extends Controller {
 
   async index() {
     const { app, ctx } = this;
-    const { query } = ctx.request;
+    const { querystring } = ctx.request;
+    const query = qs.parse(querystring);
     const options = sequelizeQuery(app.Sequelize, query, { logging: console.log });
     const user = await ctx.model.User.findAll(options);
     ctx.body = user;
