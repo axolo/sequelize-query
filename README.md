@@ -1,8 +1,8 @@
 # Sequelize Query
 
-Get [Sequelize] [querying] options by program, querystring, http or curl.
+Generate [Sequelize] [querying] options by program, querystring, http or curl.
 
-Convert Sequelize operators Aliases to Sequelize operators Symbol.
+Convert Sequelize operators `Aliases` to Sequelize operators `Symbol`.
 
 |   Alias    |          Symbol          |
 | ---------- | ------------------------ |
@@ -34,13 +34,13 @@ sequelizeQuery(sequelize, query, options, keys, excludeOps)
 
 ### parameters
 
-|    Name    |  Type  | Required |          Description           |
-| ---------- | ------ | :------: | ------------------------------ |
-| sequelize  | Object |   true   | Sequelize instance             |
-| query      | Object |   true   | query (with alias) for convert |
-| options    | Object |          | Sequelize querying options     |
-| keys       | Object |          | omit alias keys for query      |
-| excludeOps | Array  |          | omit Sequelize Op alias        |
+|    Name    |  Type  | Required |             Description              |
+| ---------- | ------ | :------: | ------------------------------------ |
+| sequelize  | Object |   true   | Sequelize instance                   |
+| query      | Object |   true   | query (where with alias) for convert |
+| options    | Object |          | Sequelize querying options           |
+| keys       | Object |          | omit values of keys in where         |
+| excludeOps | Array  |          | omit Sequelize Op alias              |
 
 - default `options`: `{ subQuery: false, distinct: true, offset: 0, limit: 1000 }`
 - default `keys`: `{ where: 'where', order: 'order', offset: 'offset', limit: 'limit' }`

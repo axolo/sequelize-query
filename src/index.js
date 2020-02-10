@@ -43,10 +43,10 @@ module.exports = (sequelize, query, options, keys, excludeOps) => {
     $col: Op.col,
   };
 
-  options = { ...{ subQuery: false, distinct: true, offset: 0, limit: 1000 }, ...options };
-  keys = { ...{ where: 'where', order: 'order', offset: 'offset', limit: 'limit' }, ...keys };
+  options = { subQuery: false, distinct: true, offset: 0, limit: 1000, ...options };
+  keys = { where: 'where', order: 'order', offset: 'offset', limit: 'limit', ...keys };
 
-  let where = _.omit(query, Object.keys(keys));
+  let where = _.omit(query, Object.values(keys));
 
   if (query[keys.where]) {
     const $where = _.isObject(query[keys.where]) ? query[keys.where] : JSON.parse(query[keys.where]);
