@@ -1,6 +1,6 @@
 {
   "name": "@axolo/sequelize-query",
-  "version": "0.0.5",
+  "version": "0.1.0",
   "description": "Get sequelize querying options by program, querystring or http.",
   "main": "src/index.js",
   "scripts": {
@@ -35,11 +35,11 @@
   "dependencies": {
     "deep-map-keys": "^2.0.1",
     "deepmerge": "^4.2.2",
-    "lodash": "^4.17.15"
+    "lodash": "^4.17.15",
+    "sequelize": "^5.21.5"
   },
   "devDependencies": {
     "eslint": "^6.8.0",
-    "qs": "^6.9.1",
-    "sequelize": "^5.21.4"
+    "qs": "^6.9.1"
   }
 }

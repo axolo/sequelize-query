@@ -3,8 +3,14 @@
 const _ = require('lodash');
 const deepMerge = require('deepmerge');
 const deepMapKeys = require('deep-map-keys');
+const Sequelize = require('sequelize');
 
-module.exports = (sequelize, query, options, keys, excludeOps) => {
+module.exports = (query, params = {}) => {
+  let { sequelize = Sequelize, options, keys, excludeOps = [] } = params;
+  options = { offset: 0, limit: 1000, ...options };
+  keys = { where: 'where', order: 'order', offset: 'offset', limit: 'limit', ...keys };
+  excludeOps = [ ...excludeOps ];
+
   const { Op } = sequelize;
   const operatorsAliases = {
     $eq: Op.eq,
@@ -42,9 +48,6 @@ module.exports = (sequelize, query, options, keys, excludeOps) => {
     $values: Op.values,
     $col: Op.col,
   };
-
-  options = { subQuery: false, distinct: true, offset: 0, limit: 1000, ...options };
-  keys = { where: 'where', order: 'order', offset: 'offset', limit: 'limit', ...keys };
 
   let where = _.omit(query, Object.values(keys));
 

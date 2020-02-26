@@ -28,22 +28,48 @@ npm run test
 
 ## API
 
+> **WARNING**: only support version >= 0.1.0
+
 ```text
-sequelizeQuery(sequelize, query, options, keys, excludeOps)
+sequelizeQuery(query, params = {})
 ```
 
 ### parameters
 
-|    Name    |  Type  | Required |             Description              |
-| ---------- | ------ | :------: | ------------------------------------ |
-| sequelize  | Object |   true   | Sequelize instance                   |
-| query      | Object |   true   | query (where with alias) for convert |
-| options    | Object |          | Sequelize querying options           |
-| keys       | Object |          | omit values of keys in where         |
-| excludeOps | Array  |          | omit Sequelize Op alias              |
+|       Name        |  Type  | Required |              Description               |
+| ----------------- | ------ | :------: | -------------------------------------- |
+| query             | Object |   true   | query (where with alias) for convert   |
+| params.sequelize  | Object |          | Sequelize instance, default to builtin |
+| params.options    | Object |          | Sequelize querying options             |
+| params.keys       | Object |          | omit values of keys in where           |
+| params.excludeOps | Array  |          | omit Sequelize Op alias                |
 
-- default `options`: `{ subQuery: false, distinct: true, offset: 0, limit: 1000 }`
-- default `keys`: `{ where: 'where', order: 'order', offset: 'offset', limit: 'limit' }`
+> default to `options`
+
+```js
+{
+  offset: 0,
+  limit: 1000,
+}
+```
+
+
+> default to `keys`
+
+```js
+{
+  where: 'where',
+  order: 'order',
+  offset: 'offset',
+  limit: 'limit',
+}
+```
+
+> default to `excludeOps`
+
+```js
+[]
+```
 
 ### return
 
@@ -53,7 +79,7 @@ sequelizeQuery(sequelize, query, options, keys, excludeOps)
 
 ## usage
 
-A example of [Egg.js] at `/app/controller/user.js` by [RESTful].
+A example of [Egg.js] at `/app/controller/user.js` by [RESTful] style router.
 
 ### controller
 
@@ -70,7 +96,12 @@ class SequelizeQueryController extends Controller {
     const { app, ctx } = this;
     const { querystring } = ctx.request;
     const query = qs.parse(querystring);
-    const options = sequelizeQuery(app.Sequelize, query, { logging: console.log });
+    const options = sequelizeQuery(query, {
+      sequelize: app.Sequelize,
+      logging: console.log,
+      distinct: true,
+      subQuery: false,
+    });
     const user = await ctx.model.User.findAll(options);
     ctx.body = user;
   }
@@ -78,7 +109,10 @@ class SequelizeQueryController extends Controller {
   async create() {
     const { app, ctx } = this;
     const { body } = ctx.request;
-    const options = sequelizeQuery(app.Sequelize, body, { logging: console.log });
+    const options = sequelizeQuery(body, {
+      sequelize: app.Sequelize,
+      logging: console.log,
+    });
     const user = await ctx.model.User.findAll(options);
     ctx.body = user;
   }
@@ -142,4 +176,4 @@ LIMIT 0, 5;
 [querying]: https://sequelize.org/master/manual/querying.html
 [encodeURIComponent]: https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/encodeURIComponent
 [Egg.js]: https://github.com/eggjs/egg
-[RESTful]: https://eggjs.org/zh-cn/tutorials/restful.html
+[RESTful]: https://eggjs.org/en/basics/router.html#restful-style-url-definition
