@@ -7,8 +7,19 @@ const Sequelize = require('sequelize');
 
 module.exports = (query, params = {}) => {
   let { sequelize = Sequelize, options, keys, excludeOps = [] } = params;
-  options = { offset: 0, limit: 1000, ...options };
-  keys = { where: 'where', order: 'order', offset: 'offset', limit: 'limit', ...keys };
+  options = {
+    offset: 0,
+    limit: 1000,
+    ...options,
+  };
+  keys = {
+    include: 'include',
+    where: 'where',
+    order: 'order',
+    offset: 'offset',
+    limit: 'limit',
+    ...keys,
+  };
   excludeOps = [ ...excludeOps ];
 
   const { Op } = sequelize;
@@ -49,8 +60,13 @@ module.exports = (query, params = {}) => {
     $col: Op.col,
   };
 
-  let where = _.omit(query, Object.values(keys));
+  if (query[keys.include]) {
+    const $include = query[keys.include];
+    const include = Array.isArray($include) ? $include.map(o => _.isObject(o) ? o : JSON.parse(o)) : JSON.parse($include);
+    options = deepMerge.all([ options, { include } ]);
+  }
 
+  let where = _.omit(query, Object.values(keys));
   if (query[keys.where]) {
     const $where = _.isObject(query[keys.where]) ? query[keys.where] : JSON.parse(query[keys.where]);
     const ops = _.omit(operatorsAliases, excludeOps)
