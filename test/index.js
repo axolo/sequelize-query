@@ -3,7 +3,8 @@
 const qs = require('qs');
 const sequelizeQuery = require('../src/index');
 
-const querystring = `include=["role","group"]\
+const querystring = `attributes=["name",["phone","mobile"]]\
+&include=["role","group"]\
 &deletedAt=null&status=1\
 &where={"$or":[{"createdAt":{"$between":["20191105","20191106"]}},\
 {"updatedAt":{"$between":["20191107","20191108"]}}]}\

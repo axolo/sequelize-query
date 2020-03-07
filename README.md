@@ -58,6 +58,7 @@ sequelizeQuery(query, params = {})
 
 ```js
 {
+  attributes: 'attributes',
   include: 'include',
   where: 'where',
   order: 'order',

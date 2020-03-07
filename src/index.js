@@ -13,6 +13,7 @@ module.exports = (query, params = {}) => {
     ...options,
   };
   keys = {
+    attributes: 'attributes',
     include: 'include',
     where: 'where',
     order: 'order',
@@ -59,6 +60,12 @@ module.exports = (query, params = {}) => {
     $values: Op.values,
     $col: Op.col,
   };
+
+  if (query[keys.attributes]) {
+    const $attributes = query[keys.attributes];
+    const attributes = Array.isArray($attributes) ? $attributes.map(o => _.isObject(o) ? o : JSON.parse(o)) : JSON.parse($attributes);
+    options = deepMerge.all([ options, { attributes } ]);
+  }
 
   if (query[keys.include]) {
     const $include = query[keys.include];
