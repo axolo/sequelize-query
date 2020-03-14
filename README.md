@@ -36,13 +36,13 @@ sequelizeQuery(query, params = {})
 
 ### parameters
 
-|       Name        |  Type  | Required |              Description               |
-| ----------------- | ------ | :------: | -------------------------------------- |
-| query             | Object |   true   | query (where with alias) for convert   |
-| params.sequelize  | Object |          | Sequelize instance, default to builtin |
-| params.options    | Object |          | Sequelize querying options             |
-| params.keys       | Object |          | omit values of keys in where           |
-| params.excludeOps | Array  |          | omit Sequelize Op alias                |
+|       Name        |  Type  | Required |             Description              |
+| ----------------- | ------ | :------: | ------------------------------------ |
+| query             | Object |   true   | query (where with alias) for convert |
+| params.Sequelize  | Object |          | Sequelize, default to builtin        |
+| params.options    | Object |          | Sequelize querying options           |
+| params.keys       | Object |          | omit values of keys in where         |
+| params.excludeOps | Array  |          | omit Sequelize Op alias              |
 
 > default to `options`
 
@@ -93,13 +93,12 @@ const sequelizeQuery = require('@axolo/sequelize-query');
 const Controller = require('egg').Controller;
 
 class SequelizeQueryController extends Controller {
-
   async index() {
     const { app, ctx } = this;
     const { querystring } = ctx.request;
     const query = qs.parse(querystring);
     const options = sequelizeQuery(query, {
-      sequelize: app.Sequelize,
+      Sequelize: app.Sequelize,
       logging: console.log,
       distinct: true,
       subQuery: false,
@@ -112,13 +111,12 @@ class SequelizeQueryController extends Controller {
     const { app, ctx } = this;
     const { body } = ctx.request;
     const options = sequelizeQuery(body, {
-      sequelize: app.Sequelize,
+      Sequelize: app.Sequelize,
       logging: console.log,
     });
     const user = await ctx.model.User.findAll(options);
     ctx.body = user;
   }
-
 }
 
 module.exports = SequelizeQueryController;
